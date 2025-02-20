@@ -1,0 +1,10 @@
+cors
+bcrypt
+dotenv
+mongodb
+express
+mongoose
+body-parser
+jsonwebtoken
+nodemailer
+express-validator

@@ -1,5 +1,5 @@
 import mongoose from "mongoose";
-import { virtualId } from "./Virtual.js";
+import { virtualId } from "./virtual.js";
 
 const UserSchema = new mongoose.Schema({
   userId: { type: String, required: true, unique: true }, // 사용되는 아이디

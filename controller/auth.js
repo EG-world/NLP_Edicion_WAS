@@ -21,7 +21,7 @@ export async function signupuser(req, res) {
             return res.status(409).json({ message: "이미 가입된 이메일입니다." });
         }
 
-        const foundPhone = await authData.findByPhone(phoneNumber);
+        const foundPhone = await authData.findByPhoneUser(phoneNumber);
         if (foundPhone) {
             return res.status(409).json({ message: "이미 가입된 전화번호입니다." });
         }

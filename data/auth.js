@@ -18,6 +18,11 @@ export async function findByEmail(email) {
   return await User.findOne({ email });
 }
 
+// 일반 사용자 이메일로 조회
+export async function findEmployerByEmail(email) {
+  return await Employer.findOne({ email });
+}
+
 // 고용주 이메일로 조회
 export async function findEmployerByBusinessNumber(businessNumber) {
   return await Employer.findOne({ businessNumber });

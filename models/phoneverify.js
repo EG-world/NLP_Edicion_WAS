@@ -1,7 +1,7 @@
 import mongoose from 'mongoose'
 import { virtualId } from './virtual.js'
 
-const User_verify_Schema = new mongoose.Schema({
+const UserVerifySchema = new mongoose.Schema({
     phone: {
         number: { type: String, required: true }, // 휴대폰 번호
         verified: { type: Boolean, default: false }, // 인증 여부

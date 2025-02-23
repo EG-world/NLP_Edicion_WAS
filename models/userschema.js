@@ -37,6 +37,8 @@ const UserSchema = new mongoose.Schema({
   resume: { type: String, defalut: null }, // 자기소개
   createdAt: { type: Date, default: Date.now }, // 가입 일시
   updatedAt: { type: Date, default: Date.now }, // 마지막 수정 일시
+  coreCompetencies: { type: Number, defalut: null },// 인재상
+  skills: { type: Number, defalut: null } // 관심 직군
 });
 
 

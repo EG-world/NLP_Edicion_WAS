@@ -12,7 +12,7 @@ const UserSchema = new mongoose.Schema({
   email: { type: String, required: true, unique: true }, // 이메일
   gender: { type: String, enum: ["남", "여"], required: true }, // 성별
   birth: { type: Date, required: true }, // 생년월일
-  education: { type: String, defalut: null }, // 학력
+  education: { type: String, default: null }, // 학력
   termsAgreed: {
     // 약관 동의 정보
     requiredTerms: { type: Boolean, default: true }, // 필수 약관 동의

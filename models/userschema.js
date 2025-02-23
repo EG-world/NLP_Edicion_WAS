@@ -31,8 +31,8 @@ const UserSchema = new mongoose.Schema({
       content: { type: String, defalut: null }, // 경력 내용
     },
   ],
-  talentedType: { type: String, defalut: null }, // 인재상 유형
-  jobObjective: { type: String, defalut: null }, // 희망 직무
+  talentedType: { type: Number, defalut: null }, // 인재상 유형
+  jobObjective: { type: Number, defalut: null }, // 희망 직무
   lorem: { type: String, defalut: null }, // 두서없는 말
   resume: { type: String, defalut: null }, // 자기소개
   createdAt: { type: Date, default: Date.now }, // 가입 일시

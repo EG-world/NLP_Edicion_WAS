@@ -1,4 +1,5 @@
 import * as employerData from "../data/employer.js";
+import { config } from "../config.js";
 
 // 기업주 채용 공고 및 지원자 리스트 조회
 export async function getEmployerJobsAndApplicants(req, res) {
@@ -34,3 +35,28 @@ export async function getApplicantsByEmployer(req, res) {
     res.status(500).json({ message: "서버 오류 발생" });
   }
 }
+
+export const getTalentedUsers = async (req, res) => {
+  try {
+    const { talentedType } = req.params;
+    const typeNum = parseInt(talentedType, 10);
+
+    const validTalentedTypes = config.talented.type.map((_, index) => index);
+
+    console.log("Received talentedType:", talentedType);
+    console.log("Parsed talentedType:", typeNum);
+    console.log("Valid talented types:", validTalentedTypes);
+    
+    // talentedType이 0~3 사이의 값인지 확인
+    if (!validTalentedTypes.includes(typeNum)) {
+      return res.status(400).json({ message: "유효하지 않은 talentedType 코드입니다." });
+    }
+
+    const users = await employerData.findUsersByTalentedType(typeNum);
+
+    res.status(200).json({ success: true, data: users });
+  } catch (error) {
+    console.error("추천 인재 조회 중 오류 발생:", error);
+    res.status(500).json({ success: false, message: "서버 오류 발생" });
+  }
+};

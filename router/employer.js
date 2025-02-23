@@ -9,4 +9,7 @@ router.get("/:businessNumber", employerController.getEmployerJobsAndApplicants);
 // 특정 채용 공고에 지원한 지원자 목록 조회
 router.get("/:businessNumber/applicants", employerController.getApplicantsByEmployer);
 
+// 인재상 유저 조회
+router.get("/talent/:talentedType", employerController.getTalentedUsers);
+
 export default router;

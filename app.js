@@ -6,7 +6,7 @@ import { config } from "./config.js";
 import connectDB from "./mongoose.js";
 import authRouter from "./router/auth.js";
 import userRouter from "./router/user.js";
-import resumeRouter from "./router/api.js";
+import apiRouter from "./router/api.js";
 import jobRouter from "./router/job.js";
 import employerRouter from "./router/employer.js";
 
@@ -24,15 +24,16 @@ app.use(
   cors({
     origin: "*",
     credentials: true,
-    allowedHeaders: ["Authorization", "Content-Type"],
+    allowedHeaders: ["Authorization", "Content-Type", "userid"],
+    methods: ["GET", "POST", "PUT", "DELETE"],
   })
 );
 
 // 라우터
+app.use("/job", jobRouter);
 app.use("/auth",authRouter);
 app.use("/user", userRouter);
-app.use("/api", resumeRouter);
-app.use("/job", jobRouter);
+app.use("/api", apiRouter);
 app.use("/employer", employerRouter);
 
 // 백엔드 포트가져오기 

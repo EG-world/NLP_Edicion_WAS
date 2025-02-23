@@ -2,7 +2,7 @@ import mongoose from "mongoose";
 import * as JobData from '../data/job.js';
 import { findUserById } from '../data/user.js';
 
-// 사용자 skills와 동일한 categoryCode를 가진 Job 목록 반환
+// 사용자 jobObjective와 동일한 categoryCode를 가진 Job 목록 반환
 export async function getJobsByUserSkills(req, res) {
   try {
     const userId = req.params.userId;
@@ -12,8 +12,8 @@ export async function getJobsByUserSkills(req, res) {
       return res.status(404).json({ message: "사용자를 찾을 수 없습니다." });
     }
 
-    const userSkills = user.skills; // 사용자 관심 직군
-    const jobs = await JobData.getJobsByCategoryCode(userSkills);
+    const jobObjective = user.jobObjective; // 사용자 관심 직군
+    const jobs = await JobData.getJobsByCategoryCode(jobObjective);
 
     res.status(200).json(jobs);
   } catch (error) {

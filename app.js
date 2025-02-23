@@ -6,6 +6,7 @@ import { config } from "./config.js";
 import connectDB from "./mongoose.js";
 import authRouter from "./router/auth.js";
 import userRouter from "./router/user.js";
+import jobRouter from "./router/job.js";
 
 dotenv.config();
 
@@ -28,6 +29,7 @@ app.use(
 // 라우터
 app.use("/auth",authRouter);
 app.use("/user", userRouter);
+app.use("/job", jobRouter);
 
 // 백엔드 포트가져오기 
 const port = config.hosting_port.user_back || 8080;

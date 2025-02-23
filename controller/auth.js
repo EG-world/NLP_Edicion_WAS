@@ -14,36 +14,58 @@ async function createJwtToken(id, userType = "user") {
 // ✅ 사용자 회원가입
 export async function signupuser(req, res) {
     try {
-        const { userId, name, email, phoneNumber, gender, birth, password } = req.body;
+        console.log(req.body);
+        const { name, email, phoneNumber, gender, birth, password, education, license, history } = req.body;
 
+        // ✅ 이메일 중복 체크
         const foundEmail = await authData.findByEmail(email);
         if (foundEmail) {
             return res.status(409).json({ message: "이미 가입된 이메일입니다." });
         }
 
+        // ✅ 전화번호 중복 체크
         const foundPhone = await authData.findByPhoneUser(phoneNumber);
         if (foundPhone) {
             return res.status(409).json({ message: "이미 가입된 전화번호입니다." });
         }
 
+        // ✅ 비밀번호 필수 확인
+        if (!password) {
+            return res.status(400).json({ message: "비밀번호를 입력하세요." });
+        }
+
+        // ✅ 비밀번호 해싱
         const hashedPassword = await bcrypt.hash(password, config.bcrypt.saltRounds);
 
-        const newUser = await authData.createUser({
-            userId,
+        // ✅ 배열 필드 기본값 설정
+        const formattedEducation = Array.isArray(education) ? education : [];
+        const formattedLicense = Array.isArray(license) ? license : [];
+        const formattedHistory = Array.isArray(history) ? history : [];
+
+        // ✅ 사용자 데이터 생성
+        const newUser = {
             name,
             email,
             phone: { number: phoneNumber, verified: false },
             gender,
             birth,
-            password: hashedPassword
-        });
+            password: hashedPassword,
+            education: formattedEducation, 
+            license: formattedLicense, 
+            history: formattedHistory 
+        };
 
-        const token = await createJwtToken(newUser._id);
+        // ✅ DB 저장
+        const createdUser = await authData.createUser(newUser);
+
+        // ✅ JWT 토큰 생성
+        const token = await createJwtToken(createdUser._id);
         res.status(201).json({ token, email });
     } catch (err) {
         res.status(500).json({ message: "회원가입 중 오류 발생", error: err.message });
     }
 }
+
 
 // ✅ 고용주 회원가입
 export async function signupEmployer(req, res) {

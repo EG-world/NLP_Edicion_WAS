@@ -2,7 +2,6 @@ import mongoose from "mongoose";
 import { virtualId } from "./virtual.js";
 
 const UserSchema = new mongoose.Schema({
-  userId: { type: String, required: true, unique: true }, // 사용되는 아이디
   name: { type: String, required: true }, // 이름
   password: { type: String, required: true }, // 비밀번호
   phone: {
@@ -12,7 +11,12 @@ const UserSchema = new mongoose.Schema({
   email: { type: String, required: true, unique: true }, // 이메일
   gender: { type: String, enum: ["남", "여"], required: true }, // 성별
   birth: { type: Date, required: true }, // 생년월일
-  education: { type: String, default: null }, // 학력
+  education: [
+    {
+      graduated: { type: String, default: null },  // 졸업 여부
+      department: { type: String, default: null },  // 학과과
+    }
+  ], // 학력
   termsAgreed: {
     // 약관 동의 정보
     requiredTerms: { type: Boolean, default: true }, // 필수 약관 동의
@@ -20,21 +24,21 @@ const UserSchema = new mongoose.Schema({
   },
   license: [
     {
-      name: { type: String, defalut: null }, // 자격증 이름
-      date: { type: Date, defalut: null }, // 자격증 취득 날짜
+      name: { type: String, default: null }, // 자격증 이름
+      date: { type: Date, default: null }, // 자격증 취득 날짜
     },
   ],
   history: [
     {
-      title: { type: String, defalut: null }, // 경력 타이틀
-      date: { type: String, defalut: null }, // 경력 일자
-      content: { type: String, defalut: null }, // 경력 내용
+      title: { type: String, default: null }, // 경력 타이틀
+      date: { type: String, default: null }, // 경력 일자
+      content: { type: String, default: null }, // 경력 내용
     },
   ],
-  talentedType: { type: Number, defalut: null }, // 인재상 유형
-  jobObjective: { type: Number, defalut: null }, // 희망 직무
-  lorem: { type: String, defalut: null }, // 두서없는 말
-  resume: { type: String, defalut: null }, // 자기소개
+  talentedType: { type: Number, default: null }, // 인재상 유형
+  jobObjective: { type: Number, default: null }, // 희망 직무
+  lorem: { type: String, default: null }, // 두서없는 말
+  resume: { type: String, default: null }, // 자기소개
   createdAt: { type: Date, default: Date.now }, // 가입 일시
   updatedAt: { type: Date, default: Date.now }, // 마지막 수정 일시
 });

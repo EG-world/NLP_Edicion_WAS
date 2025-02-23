@@ -30,7 +30,7 @@ app.use(
 // 라우터
 app.use("/auth",authRouter);
 app.use("/user", userRouter);
-app.use("/api", resumeRouter
+app.use("/api", resumeRouter);
 app.use("/job", jobRouter);
 
 // 백엔드 포트가져오기 

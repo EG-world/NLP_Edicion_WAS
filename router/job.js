@@ -3,6 +3,9 @@ import * as jobController from "../controller/job.js";
 
 const router = express.Router();
 
+// 유저 정보(lorem, preferred) 조회
+router.get("/info/:userId", jobController.getUerInfo);
+
 // 유저 skills와 일치하는 채용 공고 목록 조회
 router.get("/:userId", jobController.getJobsByUserSkills);
 

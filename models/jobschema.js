@@ -18,7 +18,12 @@ const JobSchema = new mongoose.Schema({
     phoneNumber: { type: String, required: false, default: null }, // 고용자 전화번호
     content: { type: String, required: false, default: null }, // 코멘트
     categoryCode: { type: Number, required: true }, // 채용 공고 카테고리 코드
-    applicants: [{ type: mongoose.Schema.Types.ObjectId, ref: 'User' }], // 이력서를 넣은 사용자 목록 (_id)
+    applicants: [
+        {
+            user : { type: mongoose.Schema.Types.ObjectId, ref: "User" },
+            fitness : { type: String, default: null }, // 적합도
+        }
+    ], // 이력서를 넣은 사용자 목록 (_id)
     preferred: { type: String, required: false, default: null }// 우대 조건, 원하는 인재상
 })
 

@@ -8,7 +8,12 @@ export async function getJobsByBusinessNumber(businessNumber) {
 
 // 채용 공고에 지원한 사용자 조회
 export async function getApplicantsByBusinessNumber(businessNumber) {
-  const jobs = await Job.find({ businessNumber }).populate("applicants");
+  const jobs = await Job.find({ businessNumber })
+  .populate({
+    path: "applicants.user",
+    select: "name birth phone.number email gender license history resume"
+  });
+  
 
   if (!jobs.length) {
     throw new Error("해당 사업자의 채용 공고가 없습니다.");
@@ -16,7 +21,10 @@ export async function getApplicantsByBusinessNumber(businessNumber) {
 
   let allApplicants = [];
   jobs.forEach(job => {
-    allApplicants = [...allApplicants, ...job.applicants];
+    allApplicants = [...allApplicants, ...job.applicants.map(a => ({
+      user: a.user,
+      fitness: a.fitness
+    }))];
   });
 
   return allApplicants;

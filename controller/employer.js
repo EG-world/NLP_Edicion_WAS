@@ -29,7 +29,7 @@ export async function getApplicantsByEmployer(req, res) {
       return res.status(404).json({ message: "해당 사업자의 채용 공고에 지원한 지원자가 없습니다." });
     }
 
-    res.status(200).json(applicants);
+    res.status(200).json({ success: true, data: applicants });
   } catch (error) {
     console.error("지원자 목록 조회 실패:", error);
     res.status(500).json({ message: "서버 오류 발생" });

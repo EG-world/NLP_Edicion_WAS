@@ -2,6 +2,7 @@ import mongoose from "mongoose";
 import * as JobData from '../data/job.js';
 import { findUserById } from '../data/user.js';
 import User from "../models/userschema.js";
+import { config } from "../config.js"
 
 // 사용자 jobObjective와 동일한 categoryCode를 가진 Job 목록 반환
 export async function getJobsByUserSkills(req, res) {
@@ -82,3 +83,23 @@ export async function applyForJobs(req, res) {
     res.status(500).json({ message: "서버 오류 발생" });
   }
 }
+
+// 특정 카테고리의 채용 공고 목록 조회
+export async function getCategoryJobs(req, res) {
+  try {
+      const { categoryCode } = req.params;
+
+      const jobs = await JobData.getJobsByCategory(categoryCode);
+
+      if (jobs.length === 0) {
+          return res.status(404).json({ message: `해당 카테고리(${categoryCode})의 공고가 없습니다.` });
+      }
+
+      res.status(200).json(jobs);
+  } catch (error) {
+      console.error("카테고리별 공고 조회 오류:", error);
+      res.status(500).json({ message: "서버 오류 발생" });
+  }
+}
+
+

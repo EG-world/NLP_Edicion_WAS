@@ -54,3 +54,21 @@ export async function addApplicantToJobs(applicantsData) {
 
   return successfulApplications;
 }
+
+// 특정 카테고리의 채용 공고 조회
+export async function getJobsByCategory(categoryCode) {
+  try {
+      const categoryNumber = parseInt(categoryCode, 10);
+
+      if (!categoryNumber || isNaN(categoryNumber) || categoryNumber < 1 || categoryNumber > 10) {
+          throw new Error("유효한 카테고리 코드(1~10)가 필요합니다.");
+      }
+
+      const jobs = await Job.find({ categoryCode: categoryNumber });
+
+      return jobs;
+  } catch (error) {
+      console.error("카테고리별 공고 조회 오류:", error);
+      throw new Error("채용 공고를 불러오는 중 오류 발생");
+  }
+}

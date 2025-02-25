@@ -57,35 +57,25 @@ export async function applyForJobs(req, res) {
   try {
     const { userId, applicantsData } = req.body;
 
-    // 디버깅용 콘솔 출력
-    console.log("이력서 지원 시 req 데이터 확인: ", { userId, applicantsData });
+    // 디버깅용
+    console.log("이력서 지원 시 req 데이터 확인: ", { userId, applicantsData })
 
-    if (!userId || !applicantsData || !Array.isArray(applicantsData)) {
+    if (!userId || !applicantsData) {
       console.error("유효하지 않은 요청 데이터:", { userId, applicantsData });
       return res.status(400).json({ message: "잘못된 요청 데이터입니다." });
     }
 
-    // 사용자 존재 여부 확인
     const user = await User.findById(userId);
     if (!user) {
       console.error("사용자를 찾을 수 없음:", userId);
       return res.status(404).json({ message: "사용자를 찾을 수 없습니다." });
     }
 
-    // MongoDB ObjectId로 변환
-    const formattedApplicants = applicantsData.map((app) => ({
-      jobId: new mongoose.Types.ObjectId(app.jobId), // ObjectId 변환
-      applicants: app.applicants,
-    }));
-
-    console.log("변환된 applicantsData:", formattedApplicants);
-
-    // 지원자 추가 처리
-    const successfulApplications = await JobData.addApplicantToJobs(formattedApplicants);
+    const successfulApplications = await JobData.addApplicantToJobs(applicantsData);
 
     res.status(200).json({
       message: "이력서 제출 성공",
-      successfulApplications,
+      successfulApplications
     });
   } catch (error) {
     console.error("서버 오류", error);

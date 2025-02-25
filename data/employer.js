@@ -1,5 +1,6 @@
 import Job from "../models/jobschema.js";
-import User from "../models/userschema.js"
+import User from "../models/userschema.js";
+import Employer from "../models/employerschema.js";
 
 // 사업자등록번호로 채용 공고 조회
 export async function getJobsByBusinessNumber(businessNumber) {
@@ -38,6 +39,18 @@ export const findUsersByTalentedType = async (talentedType) => {
       .lean();
   } catch (error) {
     console.error("데이터베이스 조회 오류:", error);
+    throw error;
+  }
+};
+
+// 사업자등록번호로 기업 정보 조회
+export const findEmployerByBisnessNumber = async (businessNumber) => {
+  try {
+    return await Job.find({ businessNumber })
+      .select("title phoneNumber content")
+      .lean();
+  } catch (error) {
+    console.error("데이터베이스 조회 오류:", error)
     throw error;
   }
 };

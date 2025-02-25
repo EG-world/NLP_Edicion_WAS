@@ -12,4 +12,7 @@ router.get("/:businessNumber/applicants", employerController.getApplicantsByEmpl
 // 인재상 유저 조회
 router.get("/talent/:talentedType", employerController.getTalentedUsers);
 
+// sms 서비스
+router.post("/sms/:businessNumber", employerController.getJobInfo);
+
 export default router;

@@ -23,4 +23,6 @@ yarn-debug.log*
 yarn-error.log*
 
 .env
-config.js
+
+# 더미 데이터 만드는용
+/scripts
